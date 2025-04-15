@@ -7,22 +7,24 @@ services:
     volumes:
       - ./src:/var/www
     environment:
-      DB_CONNECTION: ${DB_CONNECTION}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_USERNAME: ${DB_USERNAME}
-      DB_PASSWORD: ${DB_PASSWORD}
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_DATABASE: mysqldb
+      DB_USERNAME: root
+      DB_PASSWORD: rootpassword
     restart: always
     networks:
       - swoole_network
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:5.7
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_DATABASE: mysqldb
     ports:
       - "3306:3306"
     volumes:
@@ -35,7 +37,7 @@ services:
     container_name: postgres
     environment:
       POSTGRES_PASSWORD: rootpassword
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_DB: mypgdb
     ports:
       - "5432:5432"
     networks:
