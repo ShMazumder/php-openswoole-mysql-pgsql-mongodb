@@ -1,0 +1,6 @@
+# Ignore environment variables
+.env
+
+# Ignore Docker-related files
+*.log
+*.pid
