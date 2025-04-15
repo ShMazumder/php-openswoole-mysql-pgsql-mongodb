@@ -1,6 +1,5 @@
 FROM php:8.2-cli
 
-# Install system dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     git \
     unzip \
@@ -13,18 +12,8 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     && pecl install openswoole \
     && docker-php-ext-enable openswoole \
-    && docker-php-ext-install \
-        pdo \
-        pdo_mysql \
-        zip \
-        # Optional:
-        pdo_pgsql
+    && docker-php-ext-install pdo pdo_mysql zip
 
-# Set the working directory
 WORKDIR /var/www
 
-# Copy project files (optional – only if you're building the image with code)
-# COPY . .
-
-# Set default command
-CMD ["php", "/var/www/server.php"]
+CMD ["php", "/var/www/min.php"]

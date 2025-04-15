@@ -15,12 +15,10 @@ services:
       DB_DATABASE: mysqldb
       DB_USERNAME: root
       DB_PASSWORD: rootpassword
-    restart: always
-    depends_on:
-      mysql:
-        condition: service_healthy
     networks:
       - swoole_network
+    depends_on:
+      - mysql
 
   mysql:
     image: mysql:5.7
@@ -34,43 +32,6 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - swoole_network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-prootpassword"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # postgres:
-  #   image: postgres:alpine
-  #   container_name: postgres
-  #   environment:
-  #     POSTGRES_PASSWORD: rootpassword
-  #     POSTGRES_DB: mypgdb
-  #   ports:
-  #     - "5432:5432"
-  #   networks:
-  #     - swoole_network
-  #   healthcheck:
-  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
-
-  # mongodb:
-  #   image: mongo
-  #   container_name: mongodb
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: rootpassword
-  #   ports:
-  #     - "27017:27017"
-  #   networks:
-  #     - swoole_network
-  #   healthcheck:
-  #     test: ["CMD", "mongo", "--eval", "db.adminCommand('ping')"]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
 
 volumes:
   mysql_data:
