@@ -19,4 +19,5 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /var/www
 
 # Default command
-CMD ["php", "index.php"]
+# CMD ["php", "min.php"]
+CMD ["php", "/var/www/server.php"]
