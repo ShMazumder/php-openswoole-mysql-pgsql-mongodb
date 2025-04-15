@@ -1,30 +1,22 @@
-# Use official PHP image with Alpine for a smaller image size
-FROM php:8.2-fpm-alpine
+FROM php:8.2-cli
 
-# Install OpenSwoole and dependencies
-RUN apk --no-cache add --virtual .build-deps \
-        gcc \
-        g++ \
-        make \
-        autoconf \
-        libc-dev \
-        bash \
-        && pecl install openswoole \
-        && docker-php-ext-enable openswoole \
-        && apk del .build-deps
-
-# Install PHP extensions required for database drivers
-RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql
-RUN pecl install mongodb && docker-php-ext-enable mongodb
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libpq-dev \
+    libzip-dev \
+    libssl-dev \
+    libcurl4-openssl-dev \
+    pkg-config \
+    curl \
+    gnupg \
+    && pecl install openswoole \
+    && docker-php-ext-enable openswoole \
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip
 
 # Set working directory
 WORKDIR /var/www
 
-# Copy PHP files into the container
-COPY ./src /var/www
-
-# Expose OpenSwoole default HTTP port
-EXPOSE 9501
-
-# Command to run OpenSwoole
-CMD ["php", "server.php"]
+# Default command
+CMD ["php", "index.php"]
