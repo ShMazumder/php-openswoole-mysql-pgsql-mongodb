@@ -1,11 +1,9 @@
 {
   "name": "OpenSwoole with Databases",
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": ["../docker-compose.yml"],
   "service": "openswoole",
   "workspaceFolder": "/workspace",
-  "forwardPorts": [
-    9501
-  ],
+  "forwardPorts": [9501],
   "extensions": [
     "felixfbecker.php-debug",
     "ms-vscode.php"
@@ -13,5 +11,5 @@
   "settings": {
     "php.executablePath": "/usr/local/bin/php"
   },
-  "postCreateCommand": "docker compose up -d"
+  "postCreateCommand": "docker-compose up -d"
 }
