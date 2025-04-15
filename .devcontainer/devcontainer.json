@@ -13,5 +13,5 @@
   "settings": {
     "php.executablePath": "/usr/local/bin/php"
   },
-  "postCreateCommand": "docker-compose up -d"
+  "postCreateCommand": "docker compose up -d"
 }
